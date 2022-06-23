@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using LetsGoCamping.Models;
 using LetsGoCamping.Repository;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LetsGoCamping.Services
 {
     
     public class ReservationGapService : IReservationGapService
     {
-        private readonly CampingContext _campingContext;
+        //private readonly CampingContext _campingContext;
 
-        public ReservationGapService(CampingContext campingContext)
+        public ReservationGapService()
         {
-            _campingContext = campingContext; //Could use this to persist data 
+            
         }
 
         public List<string> GetAllPossibleCampsites(CampingReservationSearch campingReservationSearch)
@@ -42,18 +44,21 @@ namespace LetsGoCamping.Services
 
 
 
-        private bool IsSearchDatesValid(Search search, Reservations reservation)
+        public bool IsSearchDatesValid(Search search, Reservations reservation) //public so can test
         {
             bool result = true;
             var searchEndDate = DateTime.Parse(search.EndDate);
-            var reservationStartDate = DateTime.Parse(reservation.StartDate);
+            var searchStartDate = DateTime.Parse(search.StartDate);
 
-            if( (reservationStartDate.Subtract(searchEndDate)).Days > 1 || reservationStartDate.Subtract(searchEndDate).Days > 1)
+            var reservationStartDate = DateTime.Parse(reservation.StartDate);
+            var reservationEndDate = DateTime.Parse(reservation.EndDate);
+
+            if(reservationEndDate < searchStartDate.AddDays(-1) || reservationStartDate > searchEndDate.AddDays(1) )
             {
                 result = false;
-
+                if( reservationEndDate.Subtract(reservationStartDate).Days == 0  ) result = true; //not super happy with this TODO refactor pls 
             }
-            
+
             return result;
 
         }

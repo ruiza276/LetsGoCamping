@@ -1,8 +1,9 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using LetsGoCamping.Models;
 using LetsGoCamping.Services;
+using System.Collections.Generic;
 
 namespace LetsGoCamping.Controllers
 {
@@ -10,20 +11,17 @@ namespace LetsGoCamping.Controllers
     [Route("[controller]")]
     public class CampingReservationController : ControllerBase
     {
-        private readonly ILogger<CampingReservationController> _logger; //One day...
         private readonly IReservationGapService _reservationGapService;
-        public CampingReservationController(ILogger<CampingReservationController> logger, IReservationGapService reservationGapService)
+        public CampingReservationController(IReservationGapService reservationGapService)
         {
-            _logger = logger;
             _reservationGapService = reservationGapService;
         }
         
 
         [HttpGet]
-        public async Task<ActionResult<string>> GetPossibleCampsites(CampingReservationSearch campingReservationSearch) //Get campsites avaliable to book 
+        public ActionResult<string> GetPossibleCampsites(CampingReservationSearch campingReservationSearch) //Get campsites avaliable to book 
         {
-            
-            return Ok(_reservationGapService.GetAllPossibleCampsites(campingReservationSearch));
+            return  Ok(_reservationGapService.GetAllPossibleCampsites(campingReservationSearch));
         }
 
     }
