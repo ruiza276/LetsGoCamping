@@ -29,7 +29,7 @@
 And outputs a response JSON payload of:
 ```
 {
-  [ <string> ]
+  [ "<string>" ]
 }
 ```
 - Please Note: That the data does not persist anywhere at the moment
@@ -40,7 +40,82 @@ And outputs a response JSON payload of:
 2. Clone Repo.
 3. To start LetsGoCamping. Hit F5/Run --> Start Debugging in VS Code
 4. From there use a tool like Postman to send a GET JSON payload in the format above to https://localhost:5001/CampingReservation
-5. Response should be a JSON Premium payload in the format above.
+5. Response should be a JSON Premium payload in the format above. or you can use the cuRL below! :D
+
+```
+curl --location --request GET 'https://localhost:5001/CampingReservation' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "search": {
+        "startDate": "2018-06-04",
+        "endDate": "2018-06-06"
+    },
+    "campsites": [
+        {
+            "id": 1,
+            "name": "Cozy Cabin"
+        },
+        {
+            "id": 2,
+            "name": "Comfy Cabin"
+        },
+        {
+            "id": 3,
+            "name": "Rustic Cabin"
+        },
+        {
+            "id": 4,
+            "name": "Rickety Cabin"
+        },
+        {
+            "id": 5,
+            "name": "Cabin in the Woods"
+        }
+    ],
+    "reservations": [
+        {
+            "campsiteId": 1,
+            "startDate": "2018-06-01",
+            "endDate": "2018-06-03"
+        },
+        {
+            "campsiteId": 1,
+            "startDate": "2018-06-08",
+            "endDate": "2018-06-10"
+        },
+        {
+            "campsiteId": 2,
+            "startDate": "2018-06-01",
+            "endDate": "2018-06-01"
+        },
+        {
+            "campsiteId": 2,
+            "startDate": "2018-06-02",
+            "endDate": "2018-06-03"
+        },
+        {
+            "campsiteId": 2,
+            "startDate": "2018-06-07",
+            "endDate": "2018-06-09"
+        },
+        {
+            "campsiteId": 3,
+            "startDate": "2018-06-01",
+            "endDate": "2018-06-02"
+        },
+        {
+            "campsiteId": 3,
+            "startDate": "2018-06-08",
+            "endDate": "2018-06-09"
+        },
+        {
+            "campsiteId": 4,
+            "startDate": "2018-06-07",
+            "endDate": "2018-06-10"
+        }
+    ]
+}'
+```
 <br />
 SideNote: NUnit Framkework Unit Tests are avaliable to run within the tests folder :D
 <br /> 
